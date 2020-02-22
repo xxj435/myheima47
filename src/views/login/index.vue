@@ -50,12 +50,12 @@
 
         <el-form-item>
           <el-button class="box-btn" type="primary" @click="doLogin">登录</el-button>
-          <el-button class="box-btn" type="primary">注册</el-button>
+          <el-button class="box-btn" type="primary" @click="add">注册</el-button>
         </el-form-item>
       </el-form>
     </div>
     <img src="./images/login_banner_ele.png" alt="" />
-    <motai></motai>
+    <motai ref='motai'></motai>
   </div>
 </template>
 
@@ -100,6 +100,9 @@ export default {
           // 正儿八经发请求比较合理
         }
       });
+    },
+    add(){
+        this.$refs.motai.dialogFormVisible=true
     }
   }
 };
