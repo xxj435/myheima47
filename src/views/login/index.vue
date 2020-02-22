@@ -55,11 +55,16 @@
       </el-form>
     </div>
     <img src="./images/login_banner_ele.png" alt="" />
+    <motai></motai>
   </div>
 </template>
 
 <script>
+import motai from '../login/components/motai'
 export default {
+     components:{
+         motai
+     },
   data() {
     return {
       form: {
