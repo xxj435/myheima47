@@ -39,7 +39,9 @@
             <el-input v-model="form.rcode" autocomplete="off"></el-input>
           </el-col>
             <el-col :span='7' :offset='1'>
-             <el-button>获取用户验证码</el-button>
+             <el-button :disabled='sec!=0' @click="yanzcode">
+               {{sec==0?'获取用户验证码':'还有'+sec+'秒'}}
+             </el-button>
             </el-col>
         </el-row>
       </el-form-item>
@@ -60,6 +62,9 @@ export default {
       dialogFormVisible:false,
       formLabelWidth: "65px",
       picUrl:process.env.VUE_APP_URL+'/captcha?type=sendsms',
+      boolean:false,
+       sec:0,
+       t:0,
       form: {
         name:'',
         email:'',
@@ -67,7 +72,6 @@ export default {
         password:'',
         code:'',
         rcode:'',
-        t:0
       },
       rules:{
         name:[
@@ -103,9 +107,20 @@ export default {
         this.$refs[formName].resetFields();
       },
       add(){
-        alert(123)
+        // alert(123)
         this.picUrl=process.env.VUE_APP_URL+'/captcha?type=sendsms'+'&'+this.t+'='+Math.random()*999
+      },
+      yanzcode(){
+        this.sec=60;
+        //写一个每隔一秒触发的计时器
+        let timerID=setInterval(() => {
+          this.sec--;
+          if(this.sec==0){
+            clearInterval(timerID)
+          }
+        }, 1000);
       }
+
     }
   }
 
