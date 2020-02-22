@@ -56,6 +56,8 @@
 </template>
 
 <script>
+//导入axios
+import axios from 'axios'
 export default {
   data() {
     return {
@@ -119,6 +121,23 @@ export default {
             clearInterval(timerID)
           }
         }, 1000);
+        //获取手机验证码
+        axios({
+          url:process.env.VUE_APP_URL+'/sendsms',
+         method:"post",
+         data:{
+           code:this.form.code,
+           phone:this.form.phone
+         },
+         withCredentials:true
+        }).then(res=>{
+           console.log(res)
+           if(res.data.code==200){
+             alert('获取成功')
+           }else{
+             alert(res.data.message)
+           }
+         })
       }
 
     }
