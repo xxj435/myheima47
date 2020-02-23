@@ -33,7 +33,7 @@
               </el-input>
             </el-col>
             <el-col :span='7'>
-                <img src="./images/login_code.png" alt="" class="code">
+                <img :src="imgcode" alt="" class="code" @click="imgadd">
             </el-col>
           </el-row>
         </el-form-item>
@@ -60,6 +60,7 @@
 </template>
 
 <script>
+import {login} from '@/api/login.js'
 import motai from '../login/components/motai'
 export default {
      components:{
@@ -67,6 +68,8 @@ export default {
      },
   data() {
     return {
+        imgcode:process.env.VUE_APP_URL+'/captcha?type=login',
+        t:0,
       form: {
         phone: "",
         password: "",
@@ -77,7 +80,6 @@ export default {
       rules: {
         phone: [
           { required: true, message: "不能为空", trigger: "blur" },
-          { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" }
         ],
         password: [
           { required: true, message: "不能为空", trigger: "blur" },
@@ -96,13 +98,21 @@ export default {
       // 找到表单对象，调用validate方法
       this.$refs.loginForm.validate(v => {
         if (v) {
-          alert("全部通过");
-          // 正儿八经发请求比较合理
+            login({
+                phone:this.form.phone,
+                password:this.form.password,
+                code:this.form.code
+            }).then(res=>{
+                console.log(res)
+            })
         }
       });
     },
     add(){
         this.$refs.motai.dialogFormVisible=true
+    },
+    imgadd(){
+        this.imgcode=process.env.VUE_APP_URL+'/captcha?type=login&'+this.t+'='+Math.random()*999
     }
   }
 };
