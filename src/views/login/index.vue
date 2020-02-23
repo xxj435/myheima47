@@ -104,6 +104,13 @@ export default {
                 code:this.form.code
             }).then(res=>{
                 console.log(res)
+                if(res.data.code==200){
+                    window.localStorage.setItem('token',res.data.data.token)
+                    this.$router.push('/index')
+                    this.$message.success('登录成功')
+                }else{
+                    this.$message.error(res.data.message)
+                }
             })
         }
       });
