@@ -61,6 +61,7 @@
 
 <script>
 import {login} from '@/api/login.js'
+import {setToken} from '@/utilis/token.js'
 import motai from '../login/components/motai'
 export default {
      components:{
@@ -105,7 +106,7 @@ export default {
             }).then(res=>{
                 console.log(res)
                 if(res.data.code==200){
-                    window.localStorage.setItem('token',res.data.data.token)
+                    setToken(res.data.data.token)
                     this.$router.push('/index')
                     this.$message.success('登录成功')
                 }else{
