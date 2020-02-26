@@ -3,6 +3,7 @@ import Vue from 'vue'
 import login from '../views/login/index.vue'
 //导入首页
 import index from '../views/index/index.vue'
+import { Message } from 'element-ui';
 //导入导航守卫
 import Nprogress from 'nprogress'
 //导入守卫样式
@@ -15,7 +16,11 @@ import qiye from '../views/index/qiye/qiye.vue'
 import xueke from '../views/index/xueke/xueke.vue'
 //导入路由
 import VueRouter from 'vue-router'
-//注册路由
+//导入token操作
+import {removeToken} from '@/utilis/token.js'
+// 导入
+import {info} from '@/api/index.js'
+// 注册路由
 Vue.use(VueRouter)
 //实例化
      const routes=[
@@ -57,7 +62,23 @@ Vue.use(VueRouter)
     //前置导航守卫
     router.beforeEach((to, from, next) => {
         Nprogress.start();
-        next();
+        if(to.path=='/'){
+            next()
+        }else{
+            info().then(res=>{
+                if(res.data.code==200){
+                    next()
+                }else{
+                    //弹出提升
+                    Message.error('请重新登录')
+                    //删除token
+                    removeToken();
+                    //打回登录页
+                    // this.$router.push('/')
+                    next('/')
+                }
+            })
+        }
       })
 
       //后置导航守卫
