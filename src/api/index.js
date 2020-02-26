@@ -7,10 +7,18 @@ import {getToken} from '@/utilis/token.js'
 let indexRequest=axios.create({
     //基地址
     baseURL:process.env.VUE_APP_URL,
-    headers:{
-        token:getToken()//从本地存储中读取token
-    },
 })
+
+//拦截器
+// 添加请求拦截器
+indexRequest.interceptors.request.use(function (config) {
+    // 在发送请求之前做些什么
+    config.headers.token=getToken()//给每一个请求加上token
+    return config;
+  }, function (error) {
+    // 对请求错误做些什么
+    return Promise.reject(error);
+  });
 //获取登录用户信息
 export function info(){
     return indexRequest({

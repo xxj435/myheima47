@@ -99,9 +99,6 @@ export default {
 
           this.userimg = process.env.VUE_APP_URL + "/" + res.data.data.avatar;
       this.username = res.data.data.username;
-
-       
-     
     });
   },
   beforeCreate() {
