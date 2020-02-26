@@ -25,8 +25,12 @@ Vue.use(VueRouter)
 //实例化
      const routes=[
         {
-            path:'/',
+            path:'/login',
             component:login
+        },
+        {
+            path:'/',
+            redirect:'/login'
         },
         {
             path:'/index',
@@ -62,7 +66,7 @@ Vue.use(VueRouter)
     //前置导航守卫
     router.beforeEach((to, from, next) => {
         Nprogress.start();
-        if(to.path=='/'){
+        if(to.path=='/login'){
             next()
         }else{
             info().then(res=>{
@@ -70,12 +74,13 @@ Vue.use(VueRouter)
                     next()
                 }else{
                     //弹出提升
-                    Message.error('请重新登录')
+                    Message.error('请登录')
                     //删除token
                     removeToken();
                     //打回登录页
                     // this.$router.push('/')
-                    next('/')
+                    Nprogress.done();
+                    next('/login')
                 }
             })
         }

@@ -81,7 +81,7 @@ export default {
               this.$message.success("退出成功");
               //删除token
               removeToken();
-              this.$router.push("/");
+              this.$router.push("/login");
             }
           });
         })
@@ -103,7 +103,7 @@ export default {
   },
   beforeCreate() {
       if(getToken()==null){
-          this.$router.push('/')
+          this.$router.push('/login')
       }
   },
 };
