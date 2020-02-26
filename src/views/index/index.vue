@@ -15,40 +15,43 @@
     <el-container>
       <el-aside width="200px" class="my-aside">
         <el-menu
+        router
           default-active="2"
           class="el-menu-vertical-demo"
           @open="handleOpen"
           @close="handleClose"
         >
-          <el-menu-item index="2">
+          <el-menu-item index="/index/chart">
             <i class="el-icon-pie-chart"></i>
             <span slot="title">数据概况</span>
           </el-menu-item>
 
-          <el-menu-item index="2">
+          <el-menu-item index="/index/user">
             <i class="el-icon-user"></i>
             <span slot="title">用户列表</span>
           </el-menu-item>
 
-          <el-menu-item index="2">
+          <el-menu-item index="/index/question">
             <i
               class="el-icon-edit-outline"
             ></i>
             <span slot="title">题库列表</span>
           </el-menu-item>
 
-          <el-menu-item index="2">
+          <el-menu-item index="/index/qiye">
             <i class="el-icon-tickets"></i>
             <span slot="title">企业列表</span>
           </el-menu-item>
 
-          <el-menu-item index="2">
+          <el-menu-item index="/index/xueke">
             <i class="el-icon-tickets"></i>
             <span slot="title">学科列表</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
-      <el-main class="my-main">Main</el-main>
+      <el-main class="my-main">
+          <router-view></router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>
@@ -56,7 +59,7 @@
 <script>
 import { info, logout } from "@/api/index.js";
 //导入操作token的工具
-import { removeToken } from "@/utilis/token.js";
+import { removeToken,getToken } from "@/utilis/token.js";
 export default {
   data() {
     return {
@@ -92,11 +95,20 @@ export default {
   },
   created() {
     info().then(res => {
-      // console.log(res);
-      this.userimg = process.env.VUE_APP_URL + "/" + res.data.data.avatar;
+      console.log(res);
+
+          this.userimg = process.env.VUE_APP_URL + "/" + res.data.data.avatar;
       this.username = res.data.data.username;
+
+       
+     
     });
-  }
+  },
+  beforeCreate() {
+      if(getToken()==null){
+          this.$router.push('/')
+      }
+  },
 };
 </script>
 

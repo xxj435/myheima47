@@ -1,0 +1,12 @@
+diff a/src/router/index.js b/src/router/index.js	(rejected hunks)
+@@ -13,6 +13,10 @@
+         {
+             path:'/',
+             component:login
++        },
++        {
++            path:'/index',
++            component:index
+         }
+     ]
+ })

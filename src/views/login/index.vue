@@ -72,8 +72,8 @@ export default {
         imgcode:process.env.VUE_APP_URL+'/captcha?type=login',
         t:0,
       form: {
-        phone: "",
-        password: "",
+        phone: "13800138000",
+        password: "12345",
         code: "",
         agree:false
       },
