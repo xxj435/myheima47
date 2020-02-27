@@ -20,6 +20,8 @@ import VueRouter from 'vue-router'
 import {removeToken} from '@/utilis/token.js'
 // 导入
 import {info} from '@/api/index.js'
+//导入vuex
+import store from '../store/index.js'
 // 注册路由
 Vue.use(VueRouter)
 //实例化
@@ -71,6 +73,8 @@ Vue.use(VueRouter)
         }else{
             info().then(res=>{
                 if(res.data.code==200){
+                    store.commit('changeusername',res.data.data.username)
+                    store.commit('changeavatar',process.env.VUE_APP_URL+'/'+res.data.data.avatar)
                     next()
                 }else{
                     //弹出提升

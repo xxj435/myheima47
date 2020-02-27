@@ -2,19 +2,21 @@
   <el-container class="my-container">
     <el-header class="my-header">
       <div class="left-div">
-        <i class="el-icon-s-fold"></i>
+        <i  @click="isCollapse = !isCollapse"
+          :class="isCollapse ?  'el-icon-s-unfold' : 'el-icon-s-fold' "></i>
         <img src="./images/login_logo.png" alt="" />
-        <span class="left-title">黑马面面</span>
+        <span class="left-title">肖哥后台</span>
       </div>
       <div class="right-div">
-        <img :src="userimg" alt="" />
-        <span class="right-title">{{ username }},您好!!!</span>
+        <img :src="$store.state.avatar" alt="" />
+        <span class="right-title">{{ $store.state.username }},您好!!!</span>
         <el-button type="success" @click="open">退出</el-button>
       </div>
     </el-header>
     <el-container>
-      <el-aside width="200px" class="my-aside">
+      <el-aside class="my-aside" width='auto'>
         <el-menu
+        :collapse="isCollapse"
         router
           default-active="2"
           class="el-menu-vertical-demo"
@@ -57,14 +59,15 @@
 </template>
 
 <script>
-import { info, logout } from "@/api/index.js";
+import { logout } from "@/api/index.js";
 //导入操作token的工具
-import { removeToken,getToken } from "@/utilis/token.js";
+import { removeToken } from "@/utilis/token.js";
 export default {
   data() {
     return {
       userimg: "",
-      username: ""
+      username: "",
+     isCollapse:true
     };
   },
   methods: {
@@ -81,6 +84,9 @@ export default {
               this.$message.success("退出成功");
               //删除token
               removeToken();
+              //清空vuex中的数据
+              this.$store.commit('changeusername','');
+              this.$store.commit('changeavatar','')
               this.$router.push("/login");
             }
           });
@@ -93,19 +99,19 @@ export default {
         });
     }
   },
-  created() {
-    info().then(res => {
-      console.log(res);
+//   created() {
+//     info().then(res => {
+//       console.log(res);
 
-          this.userimg = process.env.VUE_APP_URL + "/" + res.data.data.avatar;
-      this.username = res.data.data.username;
-    });
-  },
-  beforeCreate() {
-      if(getToken()==null){
-          this.$router.push('/login')
-      }
-  },
+//           this.userimg = process.env.VUE_APP_URL + "/" + res.data.data.avatar;
+//       this.username = res.data.data.username;
+//     });
+//   },
+//   beforeCreate() {
+//       if(getToken()==null){
+//           this.$router.push('/login')
+//       }
+//   },
 };
 </script>
 
@@ -159,6 +165,10 @@ export default {
   }
   .my-main {
     background-color: red;
+  }
+    .el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 200px;
+    min-height: 400px;
   }
 }
 </style>
