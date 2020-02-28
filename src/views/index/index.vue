@@ -67,7 +67,7 @@ export default {
     return {
       userimg: "",
       username: "",
-     isCollapse:true
+     isCollapse:false
     };
   },
   methods: {
@@ -164,7 +164,7 @@ export default {
 
   }
   .my-main {
-    background-color: red;
+    background:rgba(232,233,236,1);
   }
     .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 200px;
