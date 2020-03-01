@@ -38,3 +38,30 @@ xuekeRequest.interceptors.request.use(function (config) {
           data
       })
   }
+
+  //新增学科
+  export function xuekeadd(data){
+    return xuekeRequest({
+      url:'/subject/add',
+      method:'post',
+      data
+    })
+  }
+
+  //编辑学科
+  export function xuekeEdit(data){
+    return xuekeRequest({
+      url:'/subject/edit',
+      method:"post",
+      data
+    })
+  }
+
+  //删除学科接口
+  export function xuekeDelete(data){
+    return xuekeRequest({
+      url:'/subject/remove',
+      method:"post",
+      data
+    })
+  }
