@@ -108,7 +108,7 @@ export default {
                 if(res.data.code==200){
                     setToken(res.data.data.token)
                     this.$router.push('/index')
-                    this.$message.success('登录成功')
+                    // this.$message.success('登录成功')
                 }else{
                     this.$message.error(res.data.message)
                 }

@@ -115,6 +115,7 @@ data() {
     //编辑
     bianji(item){
        this.$refs.adduser.dialogFormVisible=true
+       this.$refs.adduser.isAdd = false;
           if(item!=this.olditem){
         this.$refs.adduser.form={...item}
         this.olditem=item
@@ -123,6 +124,8 @@ data() {
     //新增用户
     addqiye(){
       this.$refs.adduser.dialogFormVisible=true
+       // 还要把表单内容清空
+      this.$refs.adduser.form = {};
     },
      //状态修改
     changeadd(item){

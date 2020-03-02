@@ -23,12 +23,13 @@
           @open="handleOpen"
           @close="handleClose"
         >
-          <el-menu-item index="/index/chart">
+        <!-- 从vuex中拿到用户的权限名称进行判断,该用户是否可以显示此网页 -->
+          <el-menu-item index="/index/chart" v-if="['超级管理员','管理员'].includes($store.state.role)">
             <i class="el-icon-pie-chart"></i>
             <span slot="title">数据概况</span>
           </el-menu-item>
 
-          <el-menu-item index="/index/user">
+          <el-menu-item index="/index/user" v-if="['超级管理员','管理员'].includes($store.state.role)">
             <i class="el-icon-user"></i>
             <span slot="title">用户列表</span>
           </el-menu-item>
@@ -40,7 +41,7 @@
             <span slot="title">题库列表</span>
           </el-menu-item>
 
-          <el-menu-item index="/index/qiye">
+          <el-menu-item index="/index/qiye" v-if="['超级管理员','管理员','老师'].includes($store.state.role)">
             <i class="el-icon-tickets"></i>
             <span slot="title">企业列表</span>
           </el-menu-item>
