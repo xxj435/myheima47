@@ -66,7 +66,7 @@
         </template>
       </el-table-column>
        <el-table-column
-        label="操作">
+        label="操作" v-if="['超级管理员','管理员','老师'].includes($store.state.role)">
         <!-- 如果我想在一行里面加按钮,那么最好要用到自定义列,因为用它可以很方便的拿到这一行的数据 -->
         <!-- 自定义模板 -->
         <template slot-scope="scope">
@@ -74,7 +74,7 @@
           <el-button  type='text' @click='changeadd(scope.row)'>
            {{scope.row.status===1?'禁用':'启用'}}
           </el-button>
-          <el-button  type='text' @click="Delete(scope.row)">删除</el-button>
+          <el-button  type='text' @click="Delete(scope.row)" v-if="['超级管理员','管理员'].includes($store.state.role)">删除</el-button>
         </template>
       </el-table-column>
       <!-- 分页 -->

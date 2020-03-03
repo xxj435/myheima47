@@ -24,32 +24,12 @@
           @close="handleClose"
         >
         <!-- 从vuex中拿到用户的权限名称进行判断,该用户是否可以显示此网页 -->
-          <el-menu-item index="/index/chart" v-if="['超级管理员','管理员'].includes($store.state.role)">
-            <i class="el-icon-pie-chart"></i>
-            <span slot="title">数据概况</span>
+        <template v-for="(item,index) in children">
+          <el-menu-item :key="index" :index="'/index/'+item.path" v-if="item.meta.roles.includes($store.state.role)">
+            <i :class="item.icon"></i>
+            <span slot="title">{{item.meta.title}}</span>
           </el-menu-item>
-
-          <el-menu-item index="/index/user" v-if="['超级管理员','管理员'].includes($store.state.role)">
-            <i class="el-icon-user"></i>
-            <span slot="title">用户列表</span>
-          </el-menu-item>
-
-          <el-menu-item index="/index/question">
-            <i
-              class="el-icon-edit-outline"
-            ></i>
-            <span slot="title">题库列表</span>
-          </el-menu-item>
-
-          <el-menu-item index="/index/qiye" v-if="['超级管理员','管理员','老师'].includes($store.state.role)">
-            <i class="el-icon-tickets"></i>
-            <span slot="title">企业列表</span>
-          </el-menu-item>
-
-          <el-menu-item index="/index/xueke">
-            <i class="el-icon-tickets"></i>
-            <span slot="title">学科列表</span>
-          </el-menu-item>
+        </template>
         </el-menu>
       </el-aside>
       <el-main class="my-main">
@@ -60,6 +40,7 @@
 </template>
 
 <script>
+import children from '@/router/childrenRouter.js'
 import { logout } from "@/api/index.js";
 //导入操作token的工具
 import { removeToken } from "@/utilis/token.js";
@@ -68,7 +49,8 @@ export default {
     return {
       userimg: "",
       username: "",
-     isCollapse:false
+     isCollapse:false,
+     children
     };
   },
   methods: {

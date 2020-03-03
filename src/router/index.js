@@ -8,12 +8,8 @@ import { Message } from 'element-ui';
 import Nprogress from 'nprogress'
 //导入守卫样式
 import 'nprogress/nprogress.css'
-//导入首页子路由
-import chart from '../views/index/chart/chart.vue'
-import user from '../views/index/user/user.vue'
-import question from '../views/index/question/question.vue'
-import qiye from '../views/index/qiye/qiye.vue'
-import xueke from '../views/index/xueke/xueke.vue'
+//导入子组件
+import children from './childrenRouter.js'
 //导入路由
 import VueRouter from 'vue-router'
 //导入token操作
@@ -22,6 +18,8 @@ import {removeToken} from '@/utilis/token.js'
 import {info} from '@/api/index.js'
 //导入vuex
 import store from '../store/index.js'
+//导入children 
+
 // 注册路由
 Vue.use(VueRouter)
 //实例化
@@ -39,33 +37,7 @@ Vue.use(VueRouter)
             path:'/index',
             component:index,
             meta:{title:'首页',roles:['超级管理员','管理员','老师','学生']},
-            children:[
-                {
-                    path:'chart',
-                    component:chart,
-                    meta:{title:'数据概况',roles:['超级管理员','管理员']}
-                },
-                {
-                    path:'user',
-                    component:user,
-                    meta:{title:'用户列表',roles:['超级管理员','管理员']}
-                },
-                {
-                    path:'question',
-                    component:question,
-                    meta:{title:'题库列表',roles:['超级管理员','管理员','老师','学生']}
-                },
-                {
-                    path:'qiye',
-                    component:qiye,
-                    meta:{title:'企业列表',roles:['超级管理员','管理员','老师']}
-                },
-                {
-                    path:'xueke',
-                    component:xueke,
-                    meta:{title:'学科列表',roles:['超级管理员','管理员','老师','学生']}
-                }
-            ]
+            children
         }
     ]
     const router =new VueRouter({
