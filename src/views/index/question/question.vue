@@ -5,9 +5,8 @@
    <el-form :inline="true" :model="formInline" class="demo-form-inline">
 
   <el-form-item label="学科">
-    <el-select v-model="formInline.subject" placeholder="请选择学科">
-      <el-option v-for="(item,index) in xuekelist" :key="index" :label="item.name" :value="item.id"></el-option>
-    </el-select>
+    <!-- 学科组件 -->
+    <xuekeselect v-model="formInline.subject"></xuekeselect>
   </el-form-item>
     <el-form-item label="阶段">
     <el-select v-model="formInline.step" placeholder="请选择阶段">
@@ -17,9 +16,7 @@
     </el-select>
   </el-form-item>
     <el-form-item label="企业">
-    <el-select v-model="formInline.enterprise" placeholder="请选择企业">
-      <el-option v-for="(item,index) in qiyelist" :key="index" :label="item.name" value="item.id"></el-option>
-    </el-select>
+      <qiyeselect v-model='formInline.enterprise'></qiyeselect>
   </el-form-item>
     <el-form-item label="题型">
     <el-select v-model="formInline.type" placeholder="请选择题型">
@@ -59,7 +56,7 @@
   <el-form-item>
           <el-button type="primary">搜索</el-button>
           <el-button>清除</el-button>
-          <el-button type="primary" icon='el-icon-plus'>新增学科</el-button>
+          <el-button type="primary" icon='el-icon-plus' @click='doadd'>新增学科</el-button>
         </el-form-item>
 
   </el-form>
@@ -139,16 +136,20 @@
       :total="total">
     </el-pagination>
  </el-card>
+<addquestion ref="addquestion"></addquestion>
 </div>
 
 </template>
 
 <script>
-import {xuekelist} from '@/api/xueke.js'
-import {qiyelist} from '@/api/qiye.js'
+//导入新增对话框
+import addquestion from './components/addquestion.vue'
 //导入题目请求
 import {listquestion,statusquestion} from '@/api/question.js'
 export default {
+  components:{
+    addquestion
+  },
 data() {
   return {
     xuekelist:[],
@@ -173,6 +174,9 @@ data() {
   }
 },
 methods:{
+  doadd(){
+    this.$refs.addquestion. dialogFormVisible=true
+  },
   doaddress(item){
     statusquestion({
       id:item.id
@@ -192,20 +196,7 @@ methods:{
   }
 },
 created() {
-  //获取学科数据
-  xuekelist({
-    status:1
-  }).then(res=>{
-    // console.log(res)
-    this.list=res.data.data.items
-  })
-  //获取企业数据
-  qiyelist({
-    status:1
-  }).then(res=>{
-    // console.log(res)
-    this.qiyelist=res.data.data.items
-  })
+
   this.add()
 },
 //过滤器
@@ -228,6 +219,7 @@ filters:{
 
 <style lang='less'>
 .warapper{
+  .el-form--inline{
     .el-form-item:not(:last-child) .el-form-item__content{
     width: 150px;
   }
@@ -237,6 +229,7 @@ filters:{
   .el-form-item__label{
     padding-right: 31px;
     padding-left: 20px;
+  }
   }
   .el-form-item .el-form-item__content .el-date-editor{
     width: 150px;

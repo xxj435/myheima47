@@ -8,8 +8,12 @@ import 'element-ui/lib/theme-chalk/index.css';
 //导入store
 import store from './store/index.js'
 //导入全局过滤器
-import filters from './filters/filters.js'
-
+import '@/filters/filters.js'
+//导入全局组件
+import xuekeselect from './components/xuekeselect.vue'
+import qiyeselect from './components/qiyeselect.vue'
+Vue.component('xuekeselect',xuekeselect)
+Vue.component('qiyeselect',qiyeselect)
 
 Vue.use(ElementUI);
 import router from './router/index'
